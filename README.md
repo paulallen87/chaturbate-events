@@ -3,6 +3,9 @@ Chaturbate Events
 
 ![build status](https://travis-ci.org/paulallen87/chaturbate-events.svg?branch=master)
 ![coverage status](https://coveralls.io/repos/github/paulallen87/chaturbate-events/badge.svg?branch=master)
+![dependencies](https://img.shields.io/david/paulallen87/chaturbate-events.svg)
+![dev dependencies](https://img.shields.io/david/dev/paulallen87/chaturbate-events.svg)
+![npm version](https://img.shields.io/npm/v/@paulallen87/chaturbate-events.svg)
 
 
 A client for parsing chaturbate-browser events.
