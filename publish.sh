@@ -11,7 +11,14 @@ echo "Comment (${VERSION}): "
 read COMMENT
 
 git commit -m "${COMMENT}" || exit 1
-git tag "v${VERSION}" || exit 1
+
+if [ "{$VERSION}" != "${CURRENT_VERSION}" ]; then
+  echo "creating new git tag for ${VERSION}"
+  git tag "v${VERSION}" || exit 1
+else
+  echo "skipping git tag"
+fi
+
 git push origin master --tags || exit 1
 
 if [ "{$VERSION}" != "${CURRENT_VERSION}" ]; then
