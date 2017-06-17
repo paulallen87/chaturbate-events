@@ -7,7 +7,7 @@ COMMENT=
 git add . || exit 1
 git status
 
-echo "Comment (${VERSION}): "
+echo "Comment (${CURRENT_VERSION} -> ${VERSION}): "
 read COMMENT
 
 git commit -m "${COMMENT}" || exit 1
