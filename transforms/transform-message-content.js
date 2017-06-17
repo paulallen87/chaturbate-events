@@ -1,3 +1,5 @@
+const cheerio = require('cheerio');
+
 module.exports = (dom) => {
   dom.find('.facebox_link img[title]').each((index, el) => {
     const image = cheerio(el);

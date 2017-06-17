@@ -109,14 +109,14 @@ This object represents a chatroom user.
 * **type** ([string](#user-types)) - The type of user (chat color)
 
 ##### User Types
-* HOST - orange
-* MODERATOR - red
-* FANCLUB - green
-* TIPPED_TONS - dark purple
-* TIPPED_ALOT - light purple
-* TIPPED_RECENTLY - dark blue
-* HAS_TOKENS - light blue
-* USER - grey
+* **HOST** - orange
+* **MODERATOR** - red
+* **FANCLUB** - green
+* **TIPPED_TONS** - dark purple
+* **TIPPED_ALOT** - light purple
+* **TIPPED_RECENTLY** - dark blue
+* **HAS_TOKENS** - light blue
+* **USER** - grey
 
 ## Tests
 

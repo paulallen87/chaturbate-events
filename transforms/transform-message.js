@@ -9,9 +9,9 @@ module.exports = {
 
     username.remove();
 
-    this.emit('message', {
+    return {
       user: transformUser(username),
       message: transformMessageContent(dom)
-    });
+    }
   }
 };

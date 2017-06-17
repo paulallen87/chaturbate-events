@@ -1,6 +1,6 @@
 {
   "name": "@paulallen87/chaturbate-events",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Event watcher for Chaturbate profiles.",
   "main": "index.js",
   "engines": {
@@ -16,7 +16,7 @@
   "keywords": [
     "chaturbate"
   ],
-  "author": "“Paul <“paul.allen.87.555@gmail.com”>",
+  "author": "“Paul Allen <“paul.allen.87.555@gmail.com”>",
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/paulallen87/chaturbate-events/issues"
@@ -27,6 +27,7 @@
     "mocha": "^3.4.2"
   },
   "dependencies": {
-    "cheerio": "^1.0.0-rc.1"
+    "cheerio": "^1.0.0-rc.1",
+    "debug": "^2.6.8"
   }
 }

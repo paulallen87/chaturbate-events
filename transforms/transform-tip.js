@@ -4,7 +4,7 @@ const TIP_REGEX = / tipped (\d+) tokens?/;
 
 module.exports = {
   event: 'tip',
-  selector: '.tipalert'
+  selector: '.tipalert',
   transform: (dom) => {
     const tip = dom.find('.tipalert');
     const username = tip.find('.username');

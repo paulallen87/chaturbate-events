@@ -1,13 +1,20 @@
-const debug = require('debug')('chaturbate-events');
+'use strict';
+
+const debug = require('debug')('chaturbate:events');
 const EventEmitter = require('events').EventEmitter;
 const cheerio = require('cheerio');
 
 const getTransforms = () => {
-  const glob = require('glob');
+  const fs = require('fs');
   const path = require('path');
-  const transforms = glob.sync('./transforms/transform-*.js').map((file) => {
-    return require(path.resolve(file));
+  const normalizedPath = path.join(__dirname, 'transforms');
+
+  return fs.readdirSync(normalizedPath).map((file) => {
+    debug(`loading transform '${file}'...`);
+    return require("./transforms/" + file);
   });
+
+  console.log(transforms)
 
   return transforms.filter((t) => !!t.event);
 }
@@ -16,14 +23,18 @@ class ChaturbateEvents extends EventEmitter {
   constructor(browser, transforms=null) {
     super();
     this.browser = browser;
-    this.browser.on('page_load', () => this._onPageLoad);
-    this.browser.on('child_inserted', () => this._onChildInserted);
+    this.browser.on('page_load', () => this._onPageLoad());
+    this.browser.on('child_inserted', (params) => this._onChildInserted(params));
 
     this.transforms = transforms || getTransforms();
 
     this.chatListNode = null;
     this.chatListNodes = null;
     this.chatOffline = null;
+  }
+
+  get names() {
+    return this.transforms.map((t) => t.event);
   }
 
   async _onPageLoad() {
