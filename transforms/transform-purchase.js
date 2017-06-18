@@ -1,12 +1,10 @@
 module.exports = {
   event: 'purchase',
-  selector: '.purchasealert',
-  transform: (dom) => {
-    const purchase = dom.find('.purchasealert');
-
-    // TODO: actually parse this.
+  method: 'onNotify',
+  match: (data) => data.type == 'purchase_notification',
+  transform: (self, data) => {
     return {
-      message: purchase.text()
+      message: data.message
     };
   }
 };

@@ -1,12 +1,11 @@
 const transformUser = require('./transform-user');
 
 module.exports = {
-  event: 'tip',
+  event: 'room_leave',
   method: 'onNotify',
-  match: (data) => data.type == 'tip_alert',
+  match: (data) => data.type == 'room_leave',
   transform: (self, data) => {
     return {
-      amount: data.amount,
       user: transformUser(self, data)
     };
   }
