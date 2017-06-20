@@ -1,7 +1,7 @@
 module.exports = {
   event: 'kick',
   method: 'onKick',
-  transform: (self, username) => {
+  transform: (username) => {
     return {
       username: username
     };

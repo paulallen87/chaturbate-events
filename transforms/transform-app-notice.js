@@ -4,7 +4,7 @@ module.exports = {
   event: 'app_notice',
   method: 'onNotify',
   match: (data) => data.type == 'appnotice',
-  transform: (self, data) => {
+  transform: (data) => {
     return {
       messages: (data.msg || []).map((m) => transformEmoticons(m)),
       foreground: data.foreground || '#000000',

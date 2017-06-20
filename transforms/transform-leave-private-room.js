@@ -1,7 +1,7 @@
 module.exports = {
   event: 'leave_private_room',
   method: 'onNotifyLeavePrivateRoom',
-  transform: (self, username) => {
+  transform: (username) => {
     return {
       username: username
     };

@@ -1,8 +1,6 @@
-module.exports = (self, user, username=null) => {
-  username = username || user.user || user.username || user.from_username;
+module.exports = (user, username=null) => {
   return {
-    'username': username,
-    'isHost': username == self.settings.room,
+    'username': username || user.user || user.username || user.from_username,
     'isMod': user.is_mod || false,
     'inFanclub': user.in_fanclub || false,
     'hasTokens': user.has_tokens || false,

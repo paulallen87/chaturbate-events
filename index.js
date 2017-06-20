@@ -21,14 +21,12 @@ class ChaturbateEvents extends EventEmitter {
     super();
     this.browser = browser;
     this.browser.on('init', (params) => this._onInit(params));
-    this.browser.on('connecting', () => this._onConnecting());
+    this.browser.on('open', () => this._onOpen());
     this.browser.on('message', (params) => this._onMessage(params));
     this.browser.on('error', (error) => this._onError(error));
     this.browser.on('disconnected', (params) => this._onDisconnected(params));
 
     this.transforms = transforms || getTransforms();
-    this.settings = null;
-    this.chatSettings = null;
   }
 
   get names() {
@@ -37,20 +35,12 @@ class ChaturbateEvents extends EventEmitter {
 
   _onInit(e) {
     debug('onInit');
-
-    debug(e.settings);
-    this.settings = e.settings;
-
-    debug(e.chatSettings);
-    this.chatSettings = e.chatSettings;
-
-    if (!e.hasWebsocket) {
-      debug('websocket not found, room is probably offline');
-    }
+    this.emit('init', e);
   }
 
-  _onConnecting() {
-    debug('connecting...')
+  _onOpen() {
+    debug('open...')
+    this.emit('socket_open');
   }
 
   _onMessage(e) {
@@ -60,12 +50,13 @@ class ChaturbateEvents extends EventEmitter {
       if (t.method != e.method) return;
       if (t.match && !t.match.apply(this, e.args)) return;
 
-      e.args.unshift(this);
       const result = t.transform.apply(this, e.args);
 
       if (result != null) {
         debug(`transformed to '${t.event}' event`)
         this.emit(t.event, result);
+      } else {
+        debug(`transform '${t.event}' resulted in a noop`)
       }
 
       return true;
@@ -79,11 +70,12 @@ class ChaturbateEvents extends EventEmitter {
 
   _onError(error) {
     debug('error')
-    debug(error)
+    this.emit('socket_error', error);
   }
 
   _onDisconnected(e) {
-    debug('disconnected')
+    debug('disconnected', e)
+    this.emit('socket_disconnected');
   }
   
 }

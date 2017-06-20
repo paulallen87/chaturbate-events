@@ -4,10 +4,10 @@ module.exports = {
   event: 'tip',
   method: 'onNotify',
   match: (data) => data.type == 'tip_alert',
-  transform: (self, data) => {
+  transform: (data) => {
     return {
       amount: data.amount,
-      user: transformUser(self, data)
+      user: transformUser(data)
     };
   }
 };

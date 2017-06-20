@@ -2,7 +2,7 @@ module.exports = {
   event: 'settings_update',
   method: 'onNotify',
   match: (data) => data.type == 'settingsupdate',
-  transform: (self, data) => {
+  transform: (data) => {
     return {
       allowPrivates: data.allow_privates,
       allowGroups: data.allow_groups,

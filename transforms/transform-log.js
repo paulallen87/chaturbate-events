@@ -2,7 +2,7 @@ module.exports = {
   event: 'log',
   method: 'onNotify',
   match: (data) => data.type == 'log',
-  transform: (self, data) => {
+  transform: (data) => {
     return {
       message: data.msg
     };

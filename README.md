@@ -10,6 +10,10 @@ Chaturbate Events
 
 A client for parsing chaturbate-browser events.
 
+The events are published from the [chaturbate-browser](https://github.com/paulallen87/chaturbate-browser) module. This module transforms those events into objects that are easier to handle.
+
+**Note:** this module stores no state. See [chaturbate-controller](https://github.com/paulallen87/chaturbate-controller) for handling state.
+
 ## Installation
 
 ```shell
@@ -39,21 +43,37 @@ setTimeout(() => browser.stop(), 10 * 1000);
 
 ## Events
 
+  ### **init**
+  Called when the browser hook is initialized.
+
+## Socket Events
+
+  ### **socket_open**
+  Called when the actual web socket is open.
+
+  ### **socket_error**
+  Called when the actual websocket has an error.
+
+  ### **socket_disconnected**
+  Called when the actual web socket is disconnected.
+
+## Chaturbate Events
+
   ### **app_error_log**
   Called when the Chaturbate app needs to log an error message.
 
   ##### params
-  * **message** (string) - The error message to be logged
+  * **message** (string)
 
   ### **app_notice**
   Called when a notice needs to be posted to viewers.
 
   ##### params
-  * **messages** (Array<string>) - a list of notices to display
-  * **foreground** (string) - font color
-  * **weight** (string) - font weight
-  * **background** (string) - background color
-  * **to** (?string) - optional specific recipient
+  * **messages** (Array<string>)
+  * **foreground** (string)
+  * **weight** (string)
+  * **background** (string)
+  * **to** (?string)
 
   ### **app_tab_refresh**
   ???
@@ -68,7 +88,7 @@ setTimeout(() => browser.stop(), 10 * 1000);
   Called when the broadcaster has approved a group show.
 
   ##### params
-  * **tokensPerMinute** (number) - the number of tokens per minute
+  * **tokensPerMinute** (number)
 
   ### **group_show_cancel**
   Called when a group show has been canceled.
@@ -77,59 +97,59 @@ setTimeout(() => browser.stop(), 10 * 1000);
   Called when a viewer requests a group show.
 
   ##### params
-  * **usersWaiting** (number) - the number of users waiting for the show
-  * **usersRequired** (number) - the number of users required for a show
-  * **tokensPerMinute** (number) - the number of tokens per minute for a show
+  * **usersWaiting** (number)
+  * **usersRequired** (number)
+  * **tokensPerMinute** (number)
 
   ### **hidden_show_approve**
   Called when a nidden show is approved.
 
   ##### params
-  * **initialHideCam** (?) - ?
+  * **initialHideCam** (?)
 
   ### **kick**
   Called when a viewer is kicked from the room.
 
   ##### params
-  * **username** (string) - the username of the viewer that was kicked
+  * **username** (string)
 
   ### **leave_private_room**
   Called when a user leaves a private room.
 
   ##### params
-  * **username** (string) - the username of the user that left
+  * **username** (string)
 
   ### **log**
   Called when the app wants to log a message.
 
   ##### params
-  * **message** (string) - the message to log
+  * **message** (string)
 
   ### **message_change_request**
   ???
 
   ##### params
-  * **subject** (string) - the new message subject???
+  * **subject** (string)
 
   ### **personally_kicked**
   Called when YOU have been kicked from the room
 
   ##### params
-  * **reason** (string) - the reason you were kicked
+  * **reason** (string)
 
   ### **private_message**
   Called when you receive a private message
 
   ##### params
-  * **tabNick** (string) - the name displayed in the chat tab
-  * **user** ([UserObject](#user-objects)) - the user who sent the message
-  * **message** (string) - the message the was received
+  * **tabNick** (string)
+  * **user** ([UserObject](#user-objects)) 
+  * **message** (string)
 
   ### **private_show_approve**
   Called when a private show is approved.
 
   ##### params
-  * **tokensPerMinute** (number) - the number of tokens per minute
+  * **tokensPerMinute** (number)
 
   ### **private_show_cancel**
   Called when a private show is canceled.
@@ -138,31 +158,31 @@ setTimeout(() => browser.stop(), 10 * 1000);
   Called when a private show is requested.
 
   ##### params
-  * **requesterUsername** (string) - the username of the requester
-  * **tokensPerMinute** (number) - the number of tokens per minute
+  * **requesterUsername** (string)
+  * **tokensPerMinute** (number)
 
   ### **promotion**
   Called when a user has been promoted to moderator.
 
   ##### params
-  * **toNick** (string) - the usernae of the new moderator
-  * **fromNick** (string) - the username of who performed the action
+  * **toNick** (string)
+  * **fromNick** (string)
 
   ### **purchase**
   Called when an item has been purchased.
 
   ##### params
-  * **message** (string) - the message of the purchase.
+  * **message** (string)
 
   ### **receive_tip**
   Called then YOU receive a tip.
 
   ##### params
-  * **amount** (number) - the amount that was tipped
-  * **fromUsername** (string) - the username of who tipped
-  * **toUsername** (string) - the username of who received
-  * **message** (string) - the tip message
-  * **history** (boolean) - ???
+  * **amount** (number)
+  * **fromUsername** (string)
+  * **toUsername** (string)
+  * **message** (string)
+  * **history** (boolean)
 
   ### **refresh_panel**
   ???
@@ -171,89 +191,88 @@ setTimeout(() => browser.stop(), 10 * 1000);
   Called when moderator privs have been revoked.
 
   ##### params
-  * **toNick** (string) - the username of the former moderator
-  * **fromNick** (string) - the username of who performed the action
+  * **toNick** (string)
+  * **fromNick** (string)
 
   ### **room_count**
   Called when the room count is updated.
 
   ##### params
-  * **count** (number) - the number of viewers in the room
+  * **count** (number)
 
   ### **room_entry**
   Called when someone enters the room.
 
   ##### params
-  * **user** ([UserObject](#user-objects)) - the user who entered
+  * **user** ([UserObject](#user-objects))
 
   ### **room_leave**
   Called when someone leaves the room
 
   ##### params
-  * **user** ([UserObject](#user-objects)) - the user who left
+  * **user** ([UserObject](#user-objects))
 
   ### **room_message**
   Called when a new user message was received by the room.
 
   ##### params
-  * **message** (string) - the message that was received
-  * **user** ([UserObject](#user-objects)) - the use who sent the message
+  * **message** (string) 
+  * **user** ([UserObject](#user-objects))
 
   ### **settings_update**
   Called when the room settings have been changed.
 
   ##### params
-  * **allowPrivates** (boolean) - if private shows are allowed
-  * **allowGroups** (boolean) - if group shows are allowed
-  * **minimumUsersForGroupShow** (number) - the minimum nuber of users needed for a group show
-  * **privatePrice** (number) - the number of tokens for a private show
-  * **groupPrice** (number) - the number of tokens for a group show
-  * **spyPrice** (number) - the number of tokens to spy on a show
+  * **allowPrivates** (boolean)
+  * **allowGroups** (boolean)
+  * **minimumUsersForGroupShow** (number)
+  * **privatePrice** (number)
+  * **groupPrice** (number)
+  * **spyPrice** (number)
 
   ### **silence**
   Called when a viewer has been silenced.
 
   ##### params
-  * **silencedNick** (string) - the username of who was silenced
-  * **silencerNick** (string) - the username of who performed the action
+  * **silencedNick** (string)
+  * **silencerNick** (string)
 
   ### **tip**
   Called when a tip was received.
 
   ##### params
-  * **amount** (number) - the number of tokens tipped
-  * **user** ([UserObject](#user-objects)) - the user who tipped
+  * **amount** (number)
+  * **user** ([UserObject](#user-objects))
 
   ### **title_change**
   Called when the room title has changed.
 
   ##### params
-  * **title** (string) - the new title
-  * **showInChat** (boolean) - if the update should be posted in chat
+  * **title** (string)
+  * **showInChat** (boolean)
 
   ### **token_balance_update**
   ???
 
   ##### params
-  * **usernames** (Array<string>) - ???
-  * **tokenAmounts** (Array<number>) - ???
+  * **usernames** (Array<string>)
+  * **tokenAmounts** (Array<number>)
 
 ## User Objects
 
   This object represents a chatroom user.
 
   ##### Params
-  * **username** (string) - The username of the user
-  * **isHost** (boolean) - The user is the host of the room (gold color)
-  * **isMod** (boolean) - The user is a moderator the room (red color)
-  * **inFanclub** (boolean) - The user is a member of the fanclub (green color)
-  * **tippedTonsRecently** (boolean) - The user has tipped a ton recently (dark purple color)
-  * **tippedAlotRecently** (boolean) - The user has tipped a lot recently (light purple color)
-  * **tippedTecently** (boolean) - The user has tipped recently (dark blue color)
-  * **hasTokens** (boolean) - The user has tokens (light blue color)
-  * **gender** (string) - The user's gender
-  * **fontColor** (string) - The user's font color
-  * **fontFamily** (string) - The user's font family
+  * **username** (string)
+  * **isMod** (boolean)
+  * **inFanclub** (boolean)
+  * **tippedTonsRecently** (boolean)
+  * **tippedAlotRecently** (boolean)
+  * **tippedTecently** (boolean)
+  * **hasTokens** (boolean)
+  * **gender** (string)
+  * **fontColor** (string)
+  * **fontFamily** (string)
 
 ## Tests
 

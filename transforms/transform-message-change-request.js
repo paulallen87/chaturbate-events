@@ -1,7 +1,7 @@
 module.exports = {
   event: 'message_change_request',
   method: 'onNotifyMessageChangeRequest',
-  transform: (self, subject) => {
+  transform: (subject) => {
     return {
       subject: subject
     };

@@ -4,9 +4,9 @@ module.exports = {
   event: 'room_entry',
   method: 'onNotify',
   match: (data) => data.type == 'room_entry',
-  transform: (self, data) => {
+  transform: (data) => {
     return {
-      user: transformUser(self, data)
+      user: transformUser(data)
     };
   }
 };

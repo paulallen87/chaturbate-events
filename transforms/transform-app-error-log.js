@@ -2,7 +2,7 @@ module.exports = {
   event: 'app_error_log',
   method: 'onNotify',
   match: (data) => data.type == 'apperrorlog',
-  transform: (self, data) => {
+  transform: (data) => {
     return {
       'message': data.msg
     };
