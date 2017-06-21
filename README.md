@@ -54,8 +54,8 @@ setTimeout(() => browser.stop(), 10 * 1000);
   ### **socket_error**
   Called when the actual websocket has an error.
 
-  ### **socket_disconnected**
-  Called when the actual web socket is disconnected.
+  ### **socket_close**
+  Called when the actual web socket is closed.
 
 ## Chaturbate Events
 
@@ -76,13 +76,13 @@ setTimeout(() => browser.stop(), 10 * 1000);
   * **to** (?string)
 
   ### **app_tab_refresh**
-  ???
+  Called when you apps/bots tab needs to be refreshed.
 
   ### **away_mode_cancel**
   Called when "the broadcaster is away" has been canceled.
 
   ### **clear_app**
-  ???
+  Called when the host removes the current app.
 
   ### **group_show_approve**
   Called when the broadcaster has approved a group show.
@@ -107,6 +107,12 @@ setTimeout(() => browser.stop(), 10 * 1000);
   ##### params
   * **initialHideCam** (?)
 
+  ### **joined_room**
+  Called when YOU join the room.
+
+  ### **joined_private_room**
+  Called when YOU join a private room.
+
   ### **kick**
   Called when a viewer is kicked from the room.
 
@@ -118,6 +124,9 @@ setTimeout(() => browser.stop(), 10 * 1000);
 
   ##### params
   * **username** (string)
+
+  ### **leave_room**
+  Called when YOU leave the room.
 
   ### **log**
   Called when the app wants to log a message.
@@ -185,7 +194,7 @@ setTimeout(() => browser.stop(), 10 * 1000);
   * **history** (boolean)
 
   ### **refresh_panel**
-  ???
+  Called when the "goal" panel needs to be refreshed.
 
   ### **revoke**
   Called when moderator privs have been revoked.
@@ -218,6 +227,15 @@ setTimeout(() => browser.stop(), 10 * 1000);
   ##### params
   * **message** (string) 
   * **user** ([UserObject](#user-objects))
+
+  ### **send_kick_message**
+  Called when YOU successfully sent a kick message.
+
+  ### **send_private_message***
+  Called when YOU succesfully send a private message.
+
+  ### **send_room_message**
+  Called when you successfully send a room message.
 
   ### **settings_update**
   Called when the room settings have been changed.
@@ -255,8 +273,8 @@ setTimeout(() => browser.stop(), 10 * 1000);
   ???
 
   ##### params
-  * **usernames** (Array<string>)
-  * **tokenAmounts** (Array<number>)
+  * **usernames** (string) - comma separated
+  * **tokenAmounts** (Array<number>) - comma separated
 
 ## User Objects
 

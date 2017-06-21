@@ -24,7 +24,7 @@ class ChaturbateEvents extends EventEmitter {
     this.browser.on('open', () => this._onOpen());
     this.browser.on('message', (params) => this._onMessage(params));
     this.browser.on('error', (error) => this._onError(error));
-    this.browser.on('disconnected', (params) => this._onDisconnected(params));
+    this.browser.on('close', (params) => this._onClose(params));
 
     this.transforms = transforms || getTransforms();
   }
@@ -49,22 +49,19 @@ class ChaturbateEvents extends EventEmitter {
     const transformed = this.transforms.some((t) => {
       if (t.method != e.method) return;
       if (t.match && !t.match.apply(this, e.args)) return;
-
+      if (t.callback && !t.callback.call(this, e.callback)) return;
+  
       const result = t.transform.apply(this, e.args);
 
-      if (result != null) {
-        debug(`transformed to '${t.event}' event`)
-        this.emit(t.event, result);
-      } else {
-        debug(`transform '${t.event}' resulted in a noop`)
-      }
+      debug(`transformed to '${t.event}' event`)
+      this.emit(t.event, result);
 
       return true;
     });
 
     if (!transformed) {
       debug('unable to find matching transform')
-      e.args.forEach((arg) => debug(arg));
+      debug(e);
     }
   }
 
@@ -73,9 +70,9 @@ class ChaturbateEvents extends EventEmitter {
     this.emit('socket_error', error);
   }
 
-  _onDisconnected(e) {
-    debug('disconnected', e)
-    this.emit('socket_disconnected');
+  _onClose(e) {
+    debug('close', e)
+    this.emit('socket_close');
   }
   
 }
