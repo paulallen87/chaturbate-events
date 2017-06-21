@@ -7,8 +7,7 @@ const getTransforms = () => {
   const fs = require('fs');
   const path = require('path');
   const normalizedPath = path.join(__dirname, 'transforms');
-
-  return fs.readdirSync(normalizedPath).map((file) => {
+  const transforms = fs.readdirSync(normalizedPath).map((file) => {
     debug(`loading transform '${file}'...`);
     return require("./transforms/" + file);
   });
