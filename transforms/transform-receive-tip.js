@@ -1,16 +1,15 @@
-const transformUser = require('./transform-user');
-const transformEmoticons = require('./transform-emoticons');
+'use strict';
 
 module.exports = {
   event: 'receive_tip',
   method: 'onNotifyTipAlert',
-  transform: (amount, from_username, to_username, message, history) => {
+  transform: (amount, fromUsername, toUsername, message, history) => {
     return {
       amount: amount,
-      fromUsername: from_username,
-      toUsername: to_username,
+      fromUsername: fromUsername,
+      toUsername: toUsername,
       message: message,
-      history: history
+      history: history,
     };
-  }
+  },
 };

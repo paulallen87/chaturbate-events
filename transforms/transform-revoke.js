@@ -1,10 +1,12 @@
+'use strict';
+
 module.exports = {
   event: 'revoke',
   method: 'onRevoke',
-  transform: (to_nick, from_nick) => {
+  transform: (toNick, fromNick) => {
     return {
-      toNick: to_nick,
-      fromNick: from_nick
+      toNick: toNick,
+      fromNick: fromNick,
     };
-  }
+  },
 };

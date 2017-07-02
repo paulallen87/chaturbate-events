@@ -1,3 +1,5 @@
+'use strict';
+
 const transformUser = require('./transform-user');
 const transformEmoticons = require('./transform-emoticons');
 
@@ -7,7 +9,7 @@ module.exports = {
   transform: (username, data) => {
     return {
       message: transformEmoticons(data.m),
-      user: transformUser(data)
+      user: transformUser(data),
     };
-  }
+  },
 };

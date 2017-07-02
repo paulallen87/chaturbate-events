@@ -1,5 +1,7 @@
+'use strict';
+
 module.exports = {
   event: 'group_show_cancel',
   method: 'onNotifyGroupShowCancel',
-  transform: () => undefined
+  transform: () => undefined,
 };

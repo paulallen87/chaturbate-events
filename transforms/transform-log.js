@@ -1,10 +1,12 @@
+'use strict';
+
 module.exports = {
   event: 'log',
   method: 'onNotify',
-  match: (data) => data.type == 'log',
+  match: (data) => data.type === 'log',
   transform: (data) => {
     return {
-      message: data.msg
+      message: data.msg,
     };
-  }
+  },
 };

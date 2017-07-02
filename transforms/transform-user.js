@@ -1,4 +1,6 @@
-module.exports = (user, username=null) => {
+'use strict';
+
+module.exports = (user, username = null) => {
   return {
     'username': username || user.user || user.username || user.from_username,
     'isMod': user.is_mod || false,
@@ -8,7 +10,7 @@ module.exports = (user, username=null) => {
     'tippedTonsRecently': user.tipped_tons_recently || false,
     'tippedTecently': user.tipped_recently || false,
     'gender': user.gender || undefined,
-    'fontColor': (!user.c || user.c == 'default') ? undefined : user.c,
-    'fontFamily': (!user.f || user.f == 'default') ? undefined : user.f
+    'fontColor': (!user.c || user.c === 'default') ? undefined : user.c,
+    'fontFamily': (!user.f || user.f === 'default') ? undefined : user.f,
   };
-}
+};

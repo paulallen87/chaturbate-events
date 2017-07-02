@@ -1,12 +1,14 @@
+'use strict';
+
 const transformEmoticons = require('./transform-emoticons');
 
 module.exports = {
   event: 'title_change',
   method: 'onTitleChange',
-  transform: (title, show_in_chat) => {
+  transform: (title, showInChat) => {
     return {
       title: transformEmoticons(title),
-      showInChat: show_in_chat
+      showInChat: showInChat,
     };
-  }
+  },
 };

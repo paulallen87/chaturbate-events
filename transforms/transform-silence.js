@@ -1,10 +1,12 @@
+'use strict';
+
 module.exports = {
   event: 'silence',
   method: 'onSilence',
-  transform: (silenced_nick, silencer_nick) => {
+  transform: (silencedNick, silencerNick) => {
     return {
-      silencedNick: silenced_nick,
-      silencerNick: silencer_nick
+      silencedNick: silencedNick,
+      silencerNick: silencerNick,
     };
-  }
+  },
 };

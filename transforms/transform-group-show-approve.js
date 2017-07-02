@@ -1,9 +1,11 @@
+'use strict';
+
 module.exports = {
   event: 'group_show_approve',
   method: 'onNotifyGroupShowApprove',
-  transform: (tokens_per_minute) => {
+  transform: (tokensPerMinute) => {
     return {
-      tokensPerMinute: tokens_per_minute
+      tokensPerMinute: tokensPerMinute,
     };
-  }
+  },
 };

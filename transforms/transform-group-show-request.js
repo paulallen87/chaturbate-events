@@ -1,11 +1,13 @@
+'use strict';
+
 module.exports = {
   event: 'group_show_request',
   method: 'onNotifyGroupShowRequest',
-  transform: (users_waiting, users_required, tokens_per_minute) => {
+  transform: (usersWaiting, usersRequired, tokensPerMinute) => {
     return {
-      usersWaiting: users_waiting,
-      usersRequired: users_required,
-      tokensPerMinute: tokens_per_minute
+      usersWaiting: usersWaiting,
+      usersRequired: usersRequired,
+      tokensPerMinute: tokensPerMinute,
     };
-  }
+  },
 };

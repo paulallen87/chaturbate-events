@@ -1,10 +1,12 @@
+'use strict';
+
 module.exports = {
   event: 'token_balance_update',
   method: 'onNotifyTokenBalanceUpdate',
-  transform: (usernames, token_amounts) => {
+  transform: (usernames, tokenAmounts) => {
     return {
       usernames: usernames,
-      tokenAmounts: token_amounts
+      tokenAmounts: tokenAmounts,
     };
-  }
+  },
 };

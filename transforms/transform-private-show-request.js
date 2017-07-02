@@ -1,10 +1,12 @@
+'use strict';
+
 module.exports = {
   event: 'private_show_request',
   method: 'onNotifyPrivateShowRequest',
-  transform: (requester_username, tokens_per_minute) => {
+  transform: (requesterUsername, tokensPerMinute) => {
     return {
-      requesterUsername: requester_username,
-      tokensPerMinute: tokens_per_minute
+      requesterUsername: requesterUsername,
+      tokensPerMinute: tokensPerMinute,
     };
-  }
+  },
 };
