@@ -96,6 +96,7 @@ class ChaturbateEvents extends EventEmitter {
       const result = t.transform.apply(this, e.args);
 
       debug(`transformed to '${t.event}' event`);
+      debug(result);
       this.emit(t.event, result);
 
       return true;
