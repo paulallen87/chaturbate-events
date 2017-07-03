@@ -4,6 +4,8 @@ const fs = require('fs');
 const path = require('path');
 const debug = require('debug')('chaturbate:events');
 const {EventEmitter} = require('events');
+const {Console} = require('console');
+const logging = new Console(process.stdout, process.stderr);
 
 /**
  * Loads all known transforms.
@@ -63,7 +65,7 @@ class ChaturbateEvents extends EventEmitter {
    * @private
    */
   _onInit(e) {
-    debug('onInit');
+    debug('initialized');
 
     this.emit('init', e);
   }
@@ -74,7 +76,7 @@ class ChaturbateEvents extends EventEmitter {
    * @private
    */
   _onOpen() {
-    debug('open...');
+    debug('websocket open');
 
     this.emit('socket_open');
   }
@@ -86,25 +88,29 @@ class ChaturbateEvents extends EventEmitter {
    * @private
    */
   _onMessage(e) {
-    debug(`onMessage: ${e.method}`);
+    debug(`websocket message: ${e.method}`);
 
     const transformed = this.transforms.some((t) => {
       if (t.method !== e.method) return false;
       if (t.match && !t.match.apply(this, e.args)) return false;
       if (t.callback && !t.callback.call(this, e.callback)) return false;
 
-      const result = t.transform.apply(this, e.args);
-
-      debug(`transformed to '${t.event}' event`);
-      debug(result);
-      this.emit(t.event, result);
+      try {
+        const result = t.transform.apply(this, e.args);
+        debug(`transformed to '${t.event}' event`);
+        debug(result);
+        this.emit(t.event, result);
+      } catch (err) {
+        logging.error(`transform failed for '${e.event}'`);
+        logging.error(err);
+      }
 
       return true;
     });
 
     if (!transformed) {
-      debug('unable to find matching transform');
-      debug(e);
+      logging.warn('unable to find matching transform');
+      logging.warn(e);
     }
   }
 
@@ -115,8 +121,8 @@ class ChaturbateEvents extends EventEmitter {
    * @private
    */
   _onError(error) {
-    debug('error');
-
+    debug('websocket error', error);
+    logging.error(error);
     this.emit('socket_error', error);
   }
 
@@ -127,7 +133,7 @@ class ChaturbateEvents extends EventEmitter {
    * @private
    */
   _onClose(e) {
-    debug('close', e);
+    debug('websocket close', e);
 
     this.emit('socket_close', e);
   }
