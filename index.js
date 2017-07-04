@@ -41,6 +41,7 @@ class ChaturbateEvents extends EventEmitter {
     super();
     this.browser = browser;
     this.browser.on('init', (params) => this._onInit(params));
+    this.browser.on('hooked', (params) => this._onHooked(params));
     this.browser.on('open', () => this._onOpen());
     this.browser.on('message', (params) => this._onMessage(params));
     this.browser.on('error', (error) => this._onError(error));
@@ -68,6 +69,18 @@ class ChaturbateEvents extends EventEmitter {
     debug('initialized');
 
     this.emit('init', e);
+  }
+
+  /**
+   * Called when the websocket has been hooked.
+   *
+   * @param {Object} e
+   * @private
+   */
+  _onHooked(e) {
+    debug('websocket hooked');
+
+    this.emit('socket_hooked', e);
   }
 
   /**
