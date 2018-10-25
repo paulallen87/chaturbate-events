@@ -1,38 +1,37 @@
-'use strict';
+"use strict";
 
-const fs = require('fs');
-const path = require('path');
-const debug = require('debug')('chaturbate:events');
-const {EventEmitter} = require('events');
-const {Console} = require('console');
+const fs = require("fs");
+const path = require("path");
+const debug = require("debug")("chaturbate:events");
+const { EventEmitter } = require("events");
+const { Console } = require("console");
 const logging = new Console(process.stdout, process.stderr);
 
 /**
  * Loads all known transforms.
- * 
+ *
  * @return {Array<*>}
  * @constant
  */
 const getTransforms = () => {
-  const normalizedPath = path.join(__dirname, 'transforms');
-  const transforms = fs.readdirSync(normalizedPath).map((file) => {
+  const normalizedPath = path.join(__dirname, "transforms");
+  const transforms = fs.readdirSync(normalizedPath).map(file => {
     debug(`loading transform '${file}'...`);
     // eslint-disable-next-line global-require
     return require(`./transforms/${file}`);
   });
 
-  return transforms.filter((t) => Boolean(t.event));
+  return transforms.filter(t => Boolean(t.event));
 };
 
 /**
  * Event manager for a Chaturbate Browser instance.
  */
 class ChaturbateEvents extends EventEmitter {
-
   /**
    * Constructor.
-   * 
-   * @param {ChaturbateBrowser} browser 
+   *
+   * @param {ChaturbateBrowser} browser
    * @param {Array<*>=} transforms
    * @constructor
    * @extends EventEmitter
@@ -40,23 +39,22 @@ class ChaturbateEvents extends EventEmitter {
   constructor(browser, transforms = null) {
     super();
     this.browser = browser;
-    this.browser.on('init', (params) => this._onInit(params));
-    this.browser.on('hooked', (params) => this._onHooked(params));
-    this.browser.on('open', () => this._onOpen());
-    this.browser.on('message', (params) => this._onMessage(params));
-    this.browser.on('error', (error) => this._onError(error));
-    this.browser.on('close', (params) => this._onClose(params));
+    this.browser.on("init", params => this._onInit(params));
+    this.browser.on("open", () => this._onOpen());
+    this.browser.on("message", params => this._onMessage(params));
+    this.browser.on("error", error => this._onError(error));
+    this.browser.on("close", params => this._onClose(params));
 
     this.transforms = transforms || getTransforms();
   }
 
   /**
    * Gets a list of known event names.
-   * 
+   *
    * @type {Array<string>}
    */
   get names() {
-    return this.transforms.map((t) => t.event);
+    return this.transforms.map(t => t.event);
   }
 
   /**
@@ -66,21 +64,9 @@ class ChaturbateEvents extends EventEmitter {
    * @private
    */
   _onInit(e) {
-    debug('initialized');
+    debug("initialized");
 
-    this.emit('init', e);
-  }
-
-  /**
-   * Called when the websocket has been hooked.
-   *
-   * @param {Object} e
-   * @private
-   */
-  _onHooked(e) {
-    debug('websocket hooked');
-
-    this.emit('socket_hooked', e);
+    this.emit("init", e);
   }
 
   /**
@@ -89,9 +75,9 @@ class ChaturbateEvents extends EventEmitter {
    * @private
    */
   _onOpen() {
-    debug('websocket open');
+    debug("websocket open");
 
-    this.emit('socket_open');
+    this.emit("socket_open");
   }
 
   /**
@@ -103,7 +89,7 @@ class ChaturbateEvents extends EventEmitter {
   _onMessage(e) {
     debug(`websocket message: ${e.method}`);
 
-    const transformed = this.transforms.some((t) => {
+    const transformed = this.transforms.some(t => {
       if (t.method !== e.method) return false;
       if (t.match && !t.match.apply(this, e.args)) return false;
       if (t.callback && !t.callback.call(this, e.callback)) return false;
@@ -122,7 +108,7 @@ class ChaturbateEvents extends EventEmitter {
     });
 
     if (!transformed) {
-      logging.warn('unable to find matching transform');
+      logging.warn("unable to find matching transform");
       logging.warn(e);
     }
   }
@@ -134,23 +120,22 @@ class ChaturbateEvents extends EventEmitter {
    * @private
    */
   _onError(error) {
-    debug('websocket error', error);
+    debug("websocket error", error);
     logging.error(error);
-    this.emit('socket_error', error);
+    this.emit("socket_error", error);
   }
 
   /**
    * Called when the websocket closes.
    *
-   * @param {Event} e 
+   * @param {Event} e
    * @private
    */
   _onClose(e) {
-    debug('websocket close', e);
+    debug("websocket close", e);
 
-    this.emit('socket_close', e);
+    this.emit("socket_close", e);
   }
-
 }
 
 module.exports = ChaturbateEvents;
